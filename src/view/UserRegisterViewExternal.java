@@ -2,8 +2,10 @@
 package view;
 
 import controller.UserController;
-import model.bean.User;
 import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import utils.Validation;
 
 
 public class UserRegisterViewExternal extends javax.swing.JFrame {
@@ -34,6 +36,7 @@ public class UserRegisterViewExternal extends javax.swing.JFrame {
         pass_input = new javax.swing.JPasswordField();
         confirm_pass_input = new javax.swing.JPasswordField();
         register_button = new javax.swing.JButton();
+        buttonReturn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,6 +65,14 @@ public class UserRegisterViewExternal extends javax.swing.JFrame {
             }
         });
 
+        buttonReturn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        buttonReturn.setText("Voltar");
+        buttonReturn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonReturnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,7 +88,8 @@ public class UserRegisterViewExternal extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3))
+                            .addComponent(jLabel3)
+                            .addComponent(buttonReturn))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(email_input)
@@ -113,8 +125,10 @@ public class UserRegisterViewExternal extends javax.swing.JFrame {
                             .addComponent(confirm_pass_input, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(register_button)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(register_button)
+                    .addComponent(buttonReturn))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,24 +143,51 @@ public class UserRegisterViewExternal extends javax.swing.JFrame {
         String login = login_input.getText();
         String email = email_input.getText();
         String pass = new String(pass_input.getPassword());
+        String confirm_pass = new String(confirm_pass_input.getPassword());
+        String error = validateFields(login, email, pass, confirm_pass);
         
-        if(this.hasEmptyFields(login, email, pass)){
-            JOptionPane.showMessageDialog(null, "Erro ao Cadastrar! Campos Vazios");
+        if(!error.equals("")){
+            JOptionPane.showMessageDialog(null, error);
         }else{
-            UserController.registerUser(login, email, pass);
+            error = UserController.registerUser(login, email, pass);
+            if(!error.equals("")){
+                JOptionPane.showMessageDialog(null, "Erro! " + error);
+                return;
+            }
             
             JOptionPane.showMessageDialog(null, "Cadastrado!");
+            this.dispose();
             new LoginView().setVisible(true);
         }
     }//GEN-LAST:event_register_buttonActionPerformed
 
-    private boolean hasEmptyFields(String login, String email, String pass){
-        if(login.equals("") || email.equals("") || pass.equals(""))
-        {
-            return true;
+    private void buttonReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReturnActionPerformed
+        this.dispose();
+        new LoginView().setVisible(true);
+    }//GEN-LAST:event_buttonReturnActionPerformed
+    
+    private boolean validateFieldLength(String field){
+        return field.length() >= 3; 
+    }
+    
+    private String validateFields(String login, String email, String pass, String confirm_pass){
+        String[] arrayData = {login, email, pass, confirm_pass};
+        if(Validation.hasEmptyFields(arrayData)){
+            return "Erro ao Cadastrar! Há campos vazios.";
+        }
+        if(!(validateFieldLength(login)) || !(validateFieldLength(pass))){
+            return "Campos devem possuir mais de 3 caracteres.";
+        }
+        String regex = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Matcher validationEmail = Pattern.compile(regex).matcher(email);
+        if(!validationEmail.matches()){
+            return "Email inválido.";
+        }
+        if(!pass.equals(confirm_pass)){
+            return "Senhas não conferem.";
         }
         
-        return false;
+        return "";
     }
     /**
      * @param args the command line arguments
@@ -184,6 +225,7 @@ public class UserRegisterViewExternal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonReturn;
     private javax.swing.JPasswordField confirm_pass_input;
     private javax.swing.JTextField email_input;
     private javax.swing.JLabel jLabel1;
