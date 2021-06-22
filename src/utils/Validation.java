@@ -38,7 +38,7 @@ public class Validation {
     
     public static boolean hasEmptyFields(Object[] fields){
         for(int i =0; i < fields.length; i++){
-            if(fields[i].equals("")){
+            if(fields[i].equals("") || fields[i].equals(0)){
                 return true;
             }
         }
