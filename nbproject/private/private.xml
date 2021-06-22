@@ -3,14 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/UserRegisterViewExternal.java</file>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/LoginView.java</file>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/IndexView.java</file>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/ContactRegisterView.java</file>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/utils/Validation.java</file>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/model/dao/UserDAO.java</file>
-            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/utils/Mask.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/controller/ContactController.java</file>
             <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/controller/UserController.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/utils/Mask.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/IndexView.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/model/dao/ContactDAO.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/ContactRegisterView.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/LoginView.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/utils/Validation.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/view/UserRegisterViewExternal.java</file>
+            <file>file:/C:/Users/Lucas/Documents/NetBeansProjects/ContactBook/src/model/dao/UserDAO.java</file>
         </group>
     </open-files>
 </project-private>

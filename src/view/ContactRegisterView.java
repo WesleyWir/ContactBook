@@ -22,7 +22,7 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
             select_borndate_day.addItem(days+"");
         }
         
-        for (int months = 0; months < 12; months++) {
+        for (int months = 1; months < 13; months++) {
             select_borndate_month.addItem(months+"");
         }
        
@@ -100,6 +100,9 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
         input_phone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 input_phoneKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                input_phoneKeyReleased(evt);
             }
         });
 
@@ -247,13 +250,13 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
         if(Validation.hasEmptyFields(arrayData)){
              JOptionPane.showMessageDialog(null, "Erro ao Cadastrar! Campos Vazios.");
         }else{
-            if(Validation.dataExists(phone, phone)){
-                JOptionPane.showMessageDialog(null, "Erro! Telefone já cadastrado.");
-            }else if(Validation.dataExists(email, email)){
-                JOptionPane.showMessageDialog(null, "Erro! Email já cadastrado.");
+            String error = ContactController.createContact(name, bornDate, phone, email, state, city, neighborhood);
+            if(!error.equals("")){
+                JOptionPane.showMessageDialog(null, "Erro! " + error);
+                return;
             }
-            ContactController.createContact(name, bornDate, phone, email, state, city, neighborhood);
             JOptionPane.showMessageDialog(null, "Contato cadastrado.");
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     
@@ -283,8 +286,12 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
     
     
     private void input_phoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_phoneKeyPressed
-        this.input_phone.setText(Mask.maskPhone(this.input_phone.getText()));
+        
     }//GEN-LAST:event_input_phoneKeyPressed
+
+    private void input_phoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_phoneKeyReleased
+        this.input_phone.setText(Mask.maskPhone(this.input_phone.getText()));
+    }//GEN-LAST:event_input_phoneKeyReleased
 
     private boolean validarCamposPreenchidos(String campo){
         if(campo.equals("")){

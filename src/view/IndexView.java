@@ -100,7 +100,7 @@ public class IndexView extends javax.swing.JFrame {
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
         int confirm = JOptionPane.showConfirmDialog(null, "Deseja mesmo sair?");
-        if(confirm == 0){
+        if(confirm == JOptionPane.YES_OPTION){
             this.dispose();
             new LoginView().setVisible(true);
         }

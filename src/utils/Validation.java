@@ -16,11 +16,11 @@ import model.dao.UserDAO;
  * @author Lucas
  */
 public class Validation {
-    public static boolean dataExists(String column, String data){
+    public static boolean dataExists(String table,String column, String data){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
         try{
-            String sql = "SELECT "+column+" FROM "+UserDAO.getTable()+" WHERE "+column+" = ?";
+            String sql = "SELECT "+column+" FROM "+table+" WHERE "+column+" = ?";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, data);
             

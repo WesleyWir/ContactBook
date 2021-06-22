@@ -7,10 +7,10 @@ import java.sql.ResultSet;
 
 public class ContactController {
     
-    public static void createContact(String name, String born_date, String phone, String email, String state, String city, String neighborhood){
+    public static String createContact(String name, String born_date, String phone, String email, String state, String city, String neighborhood){
         Contact contact = new Contact(name, born_date, phone, email, state, city, neighborhood);
         
-        ContactDAO.create(contact);
+        return ContactDAO.create(contact);
     }
     
     public static ResultSet readContacts(){

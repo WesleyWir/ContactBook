@@ -20,8 +20,8 @@ public class UserDAO {
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
         try{
-            if(!(Validation.dataExists("login",user.getLogin()))){
-                if(!(Validation.dataExists("email",user.getEmail()))){
+            if(!(Validation.dataExists(getTable(),"login",user.getLogin()))){
+                if(!(Validation.dataExists(getTable(),"email",user.getEmail()))){
                     String sql = "INSERT INTO "+UserDAO.getTable()+" (login, email, pass) VALUES (?, ?, ?)";
                     stmt = con.prepareStatement(sql);
                     stmt.setString(1, user.getLogin());
