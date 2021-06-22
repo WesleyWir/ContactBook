@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import model.bean.User;
+import utils.Validation;
 
 public class UserDAO {
     
@@ -15,18 +16,29 @@ public class UserDAO {
         return UserDAO.TABLE_NAME;
     }
     
-    public static void create(User user){
+    public static String create(User user){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
         try{
-            String sql = "INSERT INTO "+UserDAO.getTable()+" (login, email, pass) VALUES (?, ?, ?)";
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, user.getLogin());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getSenha());
+            if(!(Validation.dataExists("login",user.getLogin()))){
+                if(!(Validation.dataExists("email",user.getEmail()))){
+                    String sql = "INSERT INTO "+UserDAO.getTable()+" (login, email, pass) VALUES (?, ?, ?)";
+                    stmt = con.prepareStatement(sql);
+                    stmt.setString(1, user.getLogin());
+                    stmt.setString(2, user.getEmail());
+                    stmt.setString(3, user.getSenha());
+
+                    stmt.execute();
+                    ConnectionFactory.closeConnection(con, stmt);
+                    return "";
+                }else{
+                    return "Email já cadastrado.";
+                }
+                
+            }else{
+                return "Usuário já cadastrado.";
+            }
             
-            stmt.execute();
-            stmt.close();
         }catch(SQLException ex){
             throw new RuntimeException("Erro na Conexão: ", ex);
         }
@@ -42,12 +54,16 @@ public class UserDAO {
             stmt.setString(2, user.getSenha());
             
             if(stmt.executeQuery().next()){
+                ConnectionFactory.closeConnection(con, stmt);
                 return true;
             }
             
+            ConnectionFactory.closeConnection(con, stmt);
             return false;
         }catch(SQLException ex){
             throw new RuntimeException("Erro na Conexão: ", ex);
         }
     }
+    
+    
 }

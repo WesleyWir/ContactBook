@@ -4,6 +4,10 @@ package view;
 
 import controller.ContactController;
 import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import utils.Mask;
+import utils.Validation;
 
 
 public class ContactRegisterView extends javax.swing.JInternalFrame {
@@ -91,6 +95,11 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
         input_phone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 input_phoneActionPerformed(evt);
+            }
+        });
+        input_phone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                input_phoneKeyPressed(evt);
             }
         });
 
@@ -234,27 +243,19 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
         String bornDate = year+"-";
         bornDate += month+"-";
         bornDate += day;
-        
-        if(this.hasEmptyFields(name, day_num, month_num, year_num, phone, email)){
-             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar! Campos Vazios");
+        Object[] arrayData = {name, day_num, month_num, year_num, phone, email, state, city, neighborhood};
+        if(Validation.hasEmptyFields(arrayData)){
+             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar! Campos Vazios.");
         }else{
+            if(Validation.dataExists(phone, phone)){
+                JOptionPane.showMessageDialog(null, "Erro! Telefone já cadastrado.");
+            }else if(Validation.dataExists(email, email)){
+                JOptionPane.showMessageDialog(null, "Erro! Email já cadastrado.");
+            }
             ContactController.createContact(name, bornDate, phone, email, state, city, neighborhood);
             JOptionPane.showMessageDialog(null, "Contato cadastrado.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private boolean hasEmptyFields(String name, int day, int month, 
-                                    int year, String phone, String email){
-        if(day == 0 || month == 0 || year == 0){
-            return true;
-        }
-        
-        if(name.equals("") || phone.equals("") || email.equals("")){
-            return true;
-        }
-        
-        return false;
-    }
     
     private void input_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_nameActionPerformed
         // TODO add your handling code here:
@@ -279,7 +280,11 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
     private void input_cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_cityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_cityActionPerformed
-
+    
+    
+    private void input_phoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_phoneKeyPressed
+        this.input_phone.setText(Mask.maskPhone(this.input_phone.getText()));
+    }//GEN-LAST:event_input_phoneKeyPressed
 
     private boolean validarCamposPreenchidos(String campo){
         if(campo.equals("")){
