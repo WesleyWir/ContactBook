@@ -4,6 +4,10 @@ package view;
 
 import controller.ContactController;
 import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import utils.Mask;
+import utils.Validation;
 
 
 public class ContactRegisterView extends javax.swing.JInternalFrame {
@@ -18,7 +22,7 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
             select_borndate_day.addItem(days+"");
         }
         
-        for (int months = 0; months < 12; months++) {
+        for (int months = 1; months < 13; months++) {
             select_borndate_month.addItem(months+"");
         }
        
@@ -91,6 +95,14 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
         input_phone.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 input_phoneActionPerformed(evt);
+            }
+        });
+        input_phone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                input_phoneKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                input_phoneKeyReleased(evt);
             }
         });
 
@@ -234,27 +246,19 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
         String bornDate = year+"-";
         bornDate += month+"-";
         bornDate += day;
-        
-        if(this.hasEmptyFields(name, day_num, month_num, year_num, phone, email)){
-             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar! Campos Vazios");
+        Object[] arrayData = {name, day_num, month_num, year_num, phone, email, state, city, neighborhood};
+        if(Validation.hasEmptyFields(arrayData)){
+             JOptionPane.showMessageDialog(null, "Erro ao Cadastrar! Campos Vazios.");
         }else{
-            ContactController.createContact(name, bornDate, phone, email, state, city, neighborhood);
+            String error = ContactController.createContact(name, bornDate, phone, email, state, city, neighborhood);
+            if(!error.equals("")){
+                JOptionPane.showMessageDialog(null, "Erro! " + error);
+                return;
+            }
             JOptionPane.showMessageDialog(null, "Contato cadastrado.");
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private boolean hasEmptyFields(String name, int day, int month, 
-                                    int year, String phone, String email){
-        if(day == 0 || month == 0 || year == 0){
-            return true;
-        }
-        
-        if(name.equals("") || phone.equals("") || email.equals("")){
-            return true;
-        }
-        
-        return false;
-    }
     
     private void input_nameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_nameActionPerformed
         // TODO add your handling code here:
@@ -279,7 +283,15 @@ public class ContactRegisterView extends javax.swing.JInternalFrame {
     private void input_cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_input_cityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_input_cityActionPerformed
+    
+    
+    private void input_phoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_phoneKeyPressed
+        
+    }//GEN-LAST:event_input_phoneKeyPressed
 
+    private void input_phoneKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_input_phoneKeyReleased
+        this.input_phone.setText(Mask.maskPhone(this.input_phone.getText()));
+    }//GEN-LAST:event_input_phoneKeyReleased
 
     private boolean validarCamposPreenchidos(String campo){
         if(campo.equals("")){

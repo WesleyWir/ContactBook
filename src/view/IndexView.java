@@ -4,6 +4,7 @@ package view;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class IndexView extends javax.swing.JFrame {
 
@@ -98,7 +99,11 @@ public class IndexView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSairActionPerformed
-        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(null, "Deseja mesmo sair?");
+        if(confirm == JOptionPane.YES_OPTION){
+            this.dispose();
+            new LoginView().setVisible(true);
+        }
     }//GEN-LAST:event_menuSairActionPerformed
 
     private void menuListarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarUsuariosActionPerformed

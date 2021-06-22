@@ -26,10 +26,18 @@ public class ContactEditView extends javax.swing.JInternalFrame {
         initComponents();
         
         for(int days = 1; days <= 31; days++){
+            if(days < 10){
+                select_borndate_day.addItem("0"+days);
+                continue;
+            }
             select_borndate_day.addItem(days+"");
         }
         
         for (int months = 0; months < 12; months++) {
+            if(months < 10){
+                select_borndate_month.addItem("0"+months);
+                continue;
+            }
             select_borndate_month.addItem(months+"");
         }
        

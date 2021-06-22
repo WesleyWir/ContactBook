@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.bean.Contact;
+import utils.Validation;
 
 public class ContactDAO {
     
@@ -16,22 +17,31 @@ public class ContactDAO {
         return ContactDAO.TABLE_NAME;
     }
     
-    public static void create(Contact contact){
+    public static String create(Contact contact){
         Connection con = ConnectionFactory.getConnection();
         PreparedStatement stmt;
         try{
-            String sql = "INSERT INTO "+ContactDAO.getTable()+" (name, born_date, phone, email, state, city, neighborhood) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            stmt = con.prepareStatement(sql);
-            stmt.setString(1, contact.getName());
-            stmt.setString(2, contact.getBornDate());
-            stmt.setString(3, contact.getPhone());
-            stmt.setString(4, contact.getEmail());
-            stmt.setString(5, contact.getState());
-            stmt.setString(6, contact.getCity());
-            stmt.setString(7, contact.getNeighborhood());
-            
-            stmt.execute();
-            stmt.close();
+            if(!(Validation.dataExists(getTable(),"phone",contact.getPhone()))){
+                if(!(Validation.dataExists(getTable(),"email",contact.getEmail()))){
+                    String sql = "INSERT INTO "+ContactDAO.getTable()+" (name, born_date, phone, email, state, city, neighborhood) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    stmt = con.prepareStatement(sql);
+                    stmt.setString(1, contact.getName());
+                    stmt.setString(2, contact.getBornDate());
+                    stmt.setString(3, contact.getPhone());
+                    stmt.setString(4, contact.getEmail());
+                    stmt.setString(5, contact.getState());
+                    stmt.setString(6, contact.getCity());
+                    stmt.setString(7, contact.getNeighborhood());
+
+                    stmt.execute();
+                    stmt.close();
+                    return "";
+                }else{
+                    return "Email já cadastrado.";
+                } 
+            }else{
+                return "Telefone já cadastrado.";
+            }
         }catch(SQLException ex){
             throw new RuntimeException("Erro na Conexão: ", ex);
         }
