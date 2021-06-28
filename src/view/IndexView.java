@@ -44,9 +44,12 @@ public class IndexView extends javax.swing.JFrame {
 
         jMenuBar1.setBackground(new java.awt.Color(102, 102, 102));
 
+        jMenu1.setForeground(new java.awt.Color(0, 0, 0));
         jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/fileinterfacesymboloftextpapersheet_79740.png"))); // NOI18N
         jMenu1.setText("Arquivo");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        menuSair.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         menuSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exit_icon-icons.com_70975.png"))); // NOI18N
         menuSair.setText("Sair");
         menuSair.addActionListener(new java.awt.event.ActionListener() {
@@ -58,9 +61,13 @@ public class IndexView extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
+        contactMenu.setForeground(new java.awt.Color(0, 0, 0));
         contactMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user_84308.png"))); // NOI18N
         contactMenu.setText("Contatos");
+        contactMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
+        registerContactMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        registerContactMenu.setForeground(new java.awt.Color(0, 0, 0));
         registerContactMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/adduser_añadir_3553.png"))); // NOI18N
         registerContactMenu.setText("Cadastrar");
         registerContactMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -70,6 +77,8 @@ public class IndexView extends javax.swing.JFrame {
         });
         contactMenu.add(registerContactMenu);
 
+        menuListarUsuarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        menuListarUsuarios.setForeground(new java.awt.Color(0, 0, 0));
         menuListarUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/searchmagnifierinterfacesymbol1_79893.png"))); // NOI18N
         menuListarUsuarios.setText("Listar");
         menuListarUsuarios.addActionListener(new java.awt.event.ActionListener() {
